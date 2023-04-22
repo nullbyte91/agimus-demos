@@ -1,0 +1,486 @@
+- name: sot-universal-robot
+  sub: fmauch
+  type: ROS
+  language: C++
+  cmake_flags:
+    - PYTHON_EXECUTABLE=${PYTHON_EXECUTABLE}
+    - CMAKE_INSTALL_PREFIX=${INSTALL_DIR}
+  dependencies:
+    - sot-dynamic-pinocchio
+    - dynamic-graph-python
+    - dynamic_graph_bridge
+    - dynamic_graph_bridge_msgs
+    - universal_robot
+
+- name: sot-dynamic-pinocchio
+  sub: stack-of-tasks
+  type: Non-ROS 
+  language: C++
+  cmake_flags:
+    - SUFFIX_SO_VERSION=OFF
+    - PYTHON_EXECUTABLE=${PYTHON_EXECUTABLE}
+    - CMAKE_INSTALL_PREFIX=${INSTALL_DIR}
+  dependencies:
+    - sot-core
+    - sot-tools
+
+- name: sot-core
+  sub: stack-of-tasks
+  type: Non-ROS 
+  language: C++
+  cmake_flags:
+    - SUFFIX_SO_VERSION=OFF
+    - PYTHON_EXECUTABLE=${PYTHON_EXECUTABLE}
+    - CMAKE_INSTALL_PREFIX=${INSTALL_DIR}
+  dependencies:
+    - dynamic-graph-python
+    - pinocchio
+
+- name: dynamic-graph-python
+  sub: stack-of-tasks
+  type: Non-ROS
+  language: C++
+  cmake_flags:
+    - SUFFIX_SO_VERSION=OFF
+    - PYTHON_EXECUTABLE=${PYTHON_EXECUTABLE}
+    - CMAKE_INSTALL_PREFIX=${INSTALL_DIR}
+  dependencies:
+    - dynamic-graph
+    - eigenpy
+
+- name: dynamic-graph
+  sub: stack-of-tasks
+  type: Non-ROS
+  language: C++
+  cmake_flags:
+    - SUFFIX_SO_VERSION=OFF
+    - PYTHON_EXECUTABLE=${PYTHON_EXECUTABLE}
+    - CMAKE_INSTALL_PREFIX=${INSTALL_DIR}
+  dependencies:
+    - eigenpy
+
+- name: eigenpy
+  sub: stack-of-tasks
+  type: Non-ROS
+  language: C++
+  cmake_flags:
+    - PYTHON_EXECUTABLE=${PYTHON_EXECUTABLE}
+    - CMAKE_INSTALL_PREFIX=${INSTALL_DIR}
+  dependencies:
+    - ~
+
+- name: dynamic_graph_bridge
+  sub: stack-of-tasks
+  type: ROS 
+  language: C++, Python
+  cmake_flags:
+    - SUFFIX_SO_VERSION=OFF
+    - PYTHON_EXECUTABLE=${PYTHON_EXECUTABLE}
+    - CMAKE_INSTALL_PREFIX=${INSTALL_DIR}
+  dependencies:
+    - dynamic-graph
+    - dynamic_graph_bridge_msgs
+    - dynamic-graph-python
+    - sot-dynamic-pinocchio
+    - sot-core
+
+- name: dynamic_graph_bridge_msgs
+  sub: stack-of-tasks
+  type: ROS 
+  language: .msg and .srv
+  cmake_flags:
+    - ~
+  dependencies:
+    - ~
+
+- name: roscontrol_sot
+  sub: stack-of-tasks
+  type: ROS 
+  language: C++
+  cmake_flags:
+    - ~
+  dependencies:
+    - dynamic_graph_bridge
+    - sot-core
+    - sot-dynamic-pinocchio
+    - pal_hardware_interfaces
+
+- name: pal_hardware_interfaces
+  sub: pal-robotics
+  type: ROS 
+  language: C++
+  cmake_flags:
+    - ~
+  dependencies:
+    - dynamic_graph_bridge
+    - pal_msgs
+
+- name: pal_msgs
+  sub: pal-robotics
+  type: ROS 
+  language: .msg and .srv
+  cmake_flags:
+    - ~
+  dependencies:
+    - dynamic_graph_bridge
+
+
+- name: pinocchio
+  sub: stack-of-tasks
+  type: Non-ROS 
+  language: C++
+  cmake_flags:
+    - SUFFIX_SO_VERSION=OFF
+    - BUILD_WITH_COLLISION_SUPPORT=ON
+    - PYTHON_EXECUTABLE=${PYTHON_EXECUTABLE}
+    - CMAKE_INSTALL_PREFIX=${INSTALL_DIR}
+  dependencies:
+    - hpp-fcl
+
+- name: sot-tools
+  sub: stack-of-tasks
+  type: Non-ROS 
+  language: C++
+  cmake_flags:
+    - SUFFIX_SO_VERSION=OFF
+    - PYTHON_EXECUTABLE=${PYTHON_EXECUTABLE}
+    - CMAKE_INSTALL_PREFIX=${INSTALL_DIR}
+  dependencies:
+    - sot-core
+    - example-robot-data
+
+- name: example-robot-data
+  sub: Gepetto
+  type: Non-ROS 
+  language: Python
+  cmake_flags:
+    - DBUILD_PYTHON_INTERFACE=OFF
+  dependencies:
+    - ~
+- name: universal_robot
+  sub: fmauch
+  type: ROS
+  language: C++ and Python
+  cmake_flags:
+    - ~
+  dependencies:
+    - sot-dynamic-pinocchio
+    - dynamic-graph-python
+    - dynamic_graph_bridge
+    - dynamic_graph_bridge_msgs
+    - universal_robot
+    - sot-universal-robot
+
+- name: agimus-sot
+  sub: agimus
+  type: Non ROS
+  language: C++ and Python
+  cmake_flags:
+    - SUFFIX_SO_VERSION=OFF
+    - PYTHON_EXECUTABLE=${PYTHON_EXECUTABLE}
+    - CMAKE_INSTALL_PREFIX=${INSTALL_DIR}
+  build_options:
+    - BUILD_TYPE=Release
+    - BUILD_TESTING=ON   
+  dependencies:
+    - dynamic_graph_bridge
+    - agimus_sot_msgs
+    - hpp-manipulation-corba
+
+- name: agimus_sot_msgs
+  sub: agimus
+  type: ROS
+  language: .msg and .srv
+  cmake_flags:
+    - CMAKE_INSTALL_PREFIX=${INSTALL_DIR}
+  dependencies:
+    - ~
+
+- name: hpp-manipulation-corba
+  sub: humanoid-path-planner
+  type: Non ROS
+  language: C++ and Python
+  cmake_flags:
+    - SUFFIX_SO_VERSION=OFF
+    - PYTHON_EXECUTABLE=${PYTHON_EXECUTABLE}
+    - CMAKE_INSTALL_PREFIX=${INSTALL_DIR}
+  build_options:
+    - BUILD_TYPE=Release
+    - BUILD_TESTING=ON   
+  dependencies:
+    - hpp-manipulation-urdf
+    - hpp-manipulation
+    - hpp-corbaserver
+    - hpp-template-corba
+
+- name: hpp-manipulation-urdf
+  sub: humanoid-path-planner
+  type: Non ROS
+  language: C++ and Python
+  cmake_flags:
+    - CMAKE_INSTALL_PREFIX=${INSTALL_DIR}
+  dependencies:
+    - hpp-manipulation
+
+- name: hpp-manipulation
+  sub: humanoid-path-planner
+  type: Non ROS
+  language: C++ and Python
+  cmake_flags:
+    - CMAKE_INSTALL_PREFIX=${INSTALL_DIR}
+  dependencies:
+    - hpp-core
+    - hpp-constraints
+
+- name: hpp-core
+  sub: humanoid-path-planner
+  type: Non ROS
+  language: C++ and Python
+  cmake_flags:
+    - CMAKE_INSTALL_PREFIX=${INSTALL_DIR}
+  dependencies:
+    - example-robot-data
+    - hpp-constraints
+    - hpp-statistics
+
+- name: hpp-constraints
+  sub: humanoid-path-planner
+  type: Non ROS
+  language: C++ and Python
+  cmake_flags:
+    - CMAKE_INSTALL_PREFIX=${INSTALL_DIR}
+  dependencies:
+    - hpp-environments
+    - hpp-pinocchio
+    - hpp-statistics
+
+- name: hpp-pinocchio
+  sub: humanoid-path-planner
+  type: Non ROS
+  language: C++ and Python
+  cmake_flags:
+    - CMAKE_CXX_FLAGS="-I/home/nullbyte/Desktop/updated_react/react_ws/install/include"
+    - CMAKE_INSTALL_PREFIX=${INSTALL_DIR}
+  dependencies:
+    - hpp-fcl
+    - pinocchio
+    - hpp-util
+
+- name: hpp-fcl
+  sub: florent-lamiraux
+  type: Non ROS
+  language: C++ and Python
+  cmake_flags:
+    - DBUILD_PYTHON_INTERFACE=ON
+    - DCMAKE_BUILD_TYPE=Release
+    - PYTHON_EXECUTABLE=${PYTHON_EXECUTABLE}
+    - CMAKE_INSTALL_PREFIX=${INSTALL_DIR}
+  dependencies:
+    - eigenpy
+
+- name: hpp-statistics
+  sub: humanoid-path-planner
+  type: Non ROS
+  language: C++ and Python
+  cmake_flags:
+    - CMAKE_INSTALL_PREFIX=${INSTALL_DIR}
+  dependencies:
+    - hpp-util
+
+- name: hpp-util
+  sub: humanoid-path-planner
+  type: Non ROS
+  language: C++ and Python
+  cmake_flags:
+    - CMAKE_INSTALL_PREFIX=${INSTALL_DIR}
+  dependencies:
+    - ~
+
+- name: hpp-environments
+  sub: humanoid-path-planner
+  type: Non ROS
+  language: C++ and Python
+  cmake_flags:
+    - CMAKE_INSTALL_PREFIX=${INSTALL_DIR}
+  dependencies:
+    - ~
+
+- name: realsense_gazebo_plugin
+  sub: pal-robotics
+  type: ROS
+  language: C++
+  cmake_flags:
+    - ~
+  dependencies:
+    - ~
+
+- name: rgbd_launch
+  sub: ros
+  type: ROS
+  language: Python
+  cmake_flags:
+    - ~
+  dependencies:
+    - ~
+
+- name: vision_visp
+  sub: vision
+  type: ROS
+  language: Python
+  cmake_flags:
+    - ~
+  dependencies:
+    - ~
+
+- name: visp_auto_tracker
+  sub: vision/vision_visp
+  cmake_flags:
+    - BUILD_JAVA=OFF
+    - BUILD_EXAMPLES=OFF
+    - BUILD_TESTS=OFF
+    - BUILD_DEMOS=OFF
+    - BUILD_TUTORIALS=OFF
+    - BUILD_APPS=OFF
+    - BUILD_DEPRECATED_FUNCTIONS=OFF
+    - CMAKE_BUILD_TYPE=Release
+    - CMAKE_INSTALL_PREFIX=${INSTALL_DIR}
+  dependencies:
+    - visp_tracker
+
+- name: visp_tracker
+  sub: vision/vision_visp
+  cmake_flags:
+    - BUILD_JAVA=OFF
+    - BUILD_EXAMPLES=OFF
+    - BUILD_TESTS=OFF
+    - BUILD_DEMOS=OFF
+    - BUILD_TUTORIALS=OFF
+    - BUILD_APPS=OFF
+    - BUILD_DEPRECATED_FUNCTIONS=OFF
+    - CMAKE_BUILD_TYPE=Release
+    - CMAKE_INSTALL_PREFIX=${INSTALL_DIR}
+  dependencies:
+    - visp_bridge
+
+- name: visp_bridge
+  sub: vision/vision_visp
+  cmake_flags:
+    - BUILD_JAVA=OFF
+    - BUILD_EXAMPLES=OFF
+    - BUILD_TESTS=OFF
+    - BUILD_DEMOS=OFF
+    - BUILD_TUTORIALS=OFF
+    - BUILD_APPS=OFF
+    - BUILD_DEPRECATED_FUNCTIONS=OFF
+    - CMAKE_BUILD_TYPE=Release
+    - CMAKE_INSTALL_PREFIX=${INSTALL_DIR}
+  dependencies:
+    - image_pipeline
+    - visp
+
+- name: image_pipeline
+  sub: vision
+  cmake_flags:
+    - CMAKE_INSTALL_PREFIX=${INSTALL_DIR} 
+  dependencies:
+    - vision_opencv
+
+- name: visp
+  sub: vision
+  cmake_flags:
+    - BUILD_JAVA=OFF
+    - BUILD_EXAMPLES=OFF
+    - BUILD_TESTS=OFF
+    - BUILD_DEMOS=OFF
+    - BUILD_TUTORIALS=OFF
+    - BUILD_APPS=OFF
+    - BUILD_DEPRECATED_FUNCTIONS=OFF
+    - CMAKE_BUILD_TYPE=Release
+    - CMAKE_INSTALL_PREFIX=${INSTALL_DIR}
+  dependencies:
+    - 
+
+- name: vision_opencv
+  sub: vision
+  cmake_flags:
+    - CMAKE_INSTALL_PREFIX=${INSTALL_DIR} 
+  dependencies:
+    - opencv
+
+- name: opencv
+  sub: vision
+  cmake_flags:
+    - BUILD_PERF_TESTS=Off
+    - BUILD_TESTS=Off
+    - BUILD_EXAMPLES=Off
+    - BUILD_opencv_apps=Off
+    - BUILD_opencv_calib3d=On
+    - BUILD_opencv_core=On
+    - BUILD_opencv_dnn=Off
+    - BUILD_opencv_features2d=On
+    - BUILD_opencv_flann=On
+    - BUILD_opencv_highgui=On
+    - BUILD_opencv_imgcodecs=On
+    - BUILD_opencv_imgproc=On
+    - BUILD_opencv_java_bindings_generator=Off
+    - BUILD_opencv_js=Off
+    - BUILD_opencv_ml=Off
+    - BUILD_opencv_objdetect=Off
+    - BUILD_opencv_photo=Off
+    - BUILD_opencv_python2=Off
+    - BUILD_opencv_python3=Off
+    - BUILD_opencv_python_bindings_generator=Off
+    - BUILD_opencv_python_tests=Off
+    - BUILD_opencv_shape=Off
+    - BUILD_opencv_stitching=Off
+    - BUILD_opencv_superres=Off
+    - BUILD_opencv_ts=Off
+    - BUILD_opencv_video=On
+    - BUILD_opencv_videoio=On
+    - BUILD_opencv_videostab=Off
+    - BUILD_opencv_world=Off
+    - WITH_JASPER=Off
+    - WITH_ITT=Off
+    - WITH_JPEG=On
+    - WITH_WEBP=Off
+    - WITH_PNG=On
+    - WITH_TIFF=Off
+    - WITH_OPENEXR=Off
+    - WITH_OPENCL=Off
+    - WITH_IPP=Off
+    - WITH_PROTOBUF=Off
+    - WITH_GTK_2_X=On
+    - CMAKE_BUILD_TYPE=Release
+    - CMAKE_INSTALL_PREFIX=${INSTALL_DIR}
+  dependencies:
+    - ~
+
+- name: visp_camera_calibration
+  sub: vision/vision_visp
+  cmake_flags: 
+    - BUILD_JAVA=OFF
+    - BUILD_EXAMPLES=OFF
+    - BUILD_TESTS=OFF
+    - BUILD_DEMOS=OFF
+    - BUILD_TUTORIALS=OFF
+    - BUILD_APPS=OFF
+    - BUILD_DEPRECATED_FUNCTIONS=OFF
+    - CMAKE_BUILD_TYPE=Release
+    - CMAKE_INSTALL_PREFIX=${INSTALL_DIR}
+  dependencies:
+    - visp_bridge
+
+- name: visp_hand2eye_calibration
+  sub: vision/vision_visp
+  cmake_flags:
+    - BUILD_JAVA=OFF
+    - BUILD_EXAMPLES=OFF
+    - BUILD_TESTS=OFF
+    - BUILD_DEMOS=OFF
+    - BUILD_TUTORIALS=OFF
+    - BUILD_APPS=OFF
+    - BUILD_DEPRECATED_FUNCTIONS=OFF
+    - CMAKE_BUILD_TYPE=Release
+    - CMAKE_INSTALL_PREFIX=${INSTALL_DIR}
+  dependencies:
+    - visp_bridge

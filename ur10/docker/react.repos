@@ -30,7 +30,7 @@ repositories:
   stack-of-tasks/pinocchio:
     type: git
     url: https://github.com/stack-of-tasks/pinocchio.git
-    version: devel
+    version: v2.6.8
   stack-of-tasks/sot-tools:
     type: git
     url: https://github.com/stack-of-tasks/sot-tools.git
@@ -38,7 +38,15 @@ repositories:
   stack-of-tasks/roscontrol_sot:
     type: git
     url: https://github.com/stack-of-tasks/roscontrol_sot.git
-    version: devel    
+    version: devel  
+  stack-of-tasks/sot-universal-robot:
+    type: git
+    url: https://github.com/stack-of-tasks/sot-universal-robot.git
+    version: master     
+  fmauch/universal_robot:
+    type: git
+    url: https://github.com/fmauch/universal_robot.git
+    version: calibration_devel       
   Gepetto/example-robot-data:
     type: git
     url: https://github.com/Gepetto/example-robot-data.git
@@ -51,3 +59,82 @@ repositories:
     type: git
     url: https://github.com/pal-robotics/pal_msgs.git
     version: indigo-devel
+  agimus/agimus-sot:
+    type: git
+    url: https://github.com/agimus/agimus-sot.git
+    version: devel
+  agimus/agimus_sot_msgs:
+    type: git
+    url: https://github.com/agimus/agimus_sot_msgs.git
+    version: master
+  humanoid-path-planner/hpp-manipulation-corba:
+    type: git
+    url: https://github.com/humanoid-path-planner/hpp-manipulation-corba
+    version: devel
+  humanoid-path-planner/hpp-manipulation-urdf:
+    type: git
+    url: https://github.com/humanoid-path-planner/hpp-manipulation-urdf
+    version: devel
+  humanoid-path-planner/hpp-manipulation:
+    type: git
+    url: https://github.com/humanoid-path-planner/hpp-manipulation.git
+    version: devel
+  humanoid-path-planner/hpp-core:
+    type: git
+    url: https://github.com/humanoid-path-planner/hpp-core.git
+    version: devel
+  humanoid-path-planner/hpp-constraints:
+    type: git
+    url: https://github.com/humanoid-path-planner/hpp-constraints.git
+    version: devel
+  humanoid-path-planner/hpp-pinocchio:
+    type: git
+    url: https://github.com/humanoid-path-planner/hpp-pinocchio.git
+    version: 28baebf6c0a5cf42aeb36ffbd2343e682e054b0f
+  humanoid-path-planner/hpp-statistics:
+    type: git
+    url: https://github.com/humanoid-path-planner/hpp-statistics.git
+    version: devel
+  humanoid-path-planner/hpp-environments:
+    type: git
+    url: https://github.com/humanoid-path-planner/hpp-environments.git
+    version: devel
+  humanoid-path-planner/hpp-util:
+    type: git
+    url: https://github.com/humanoid-path-planner/hpp-util.git
+    version: devel
+  florent-lamiraux/hpp-fcl:
+    type: git
+    url: https://github.com/florent-lamiraux/hpp-fcl.git
+    version: react
+
+  pal-robotics/realsense_gazebo_plugin:
+    type: git
+    url: https://github.com/pal-robotics/realsense_gazebo_plugin.git
+    version: melodic-devel
+
+  ros/rgbd_launch:
+    type: git
+    url: https://github.com/ros-drivers/rgbd_launch.git
+    version: indigo-devel
+
+  vision/vision_visp:
+    type: git
+    url: https://github.com/lagadic/vision_visp.git
+    version: master
+  vision/image_pipeline:
+    type: git
+    url: https://github.com/ros-perception/image_pipeline.git
+    version: noetic
+  vision/vision_opencv:
+    type: git
+    url: https://github.com/ros-perception/vision_opencv.git
+    version: noetic
+  vision/opencv:
+    type: git
+    url: https://github.com/opencv/opencv.git
+    version: master
+  vision/visp:
+    type: git
+    url: https://github.com/lagadic/visp.git
+    version: master
