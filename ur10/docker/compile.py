@@ -19,7 +19,7 @@ def run_cmake_and_make(cmake_args, env=None):
         raise BuildError("run_cmake_and_make", f"cmake command failed: {e}")
 
     try:
-        subprocess.run(["make", "-j10"], check=True)
+        subprocess.run(["make", "-j1"], check=True)
     except subprocess.CalledProcessError as e:
         raise BuildError("run_cmake_and_make", f"make command failed: {e}")
 
@@ -35,10 +35,11 @@ def compile_standard_project(project_name, cmake_flags, install_dir, env):
         f"-DCMAKE_INSTALL_LIBDIR=lib",
         f"-DCMAKE_BUILD_TYPE=Release",
         f"-DENFORCE_MINIMAL_CXX_STANDARD=ON",
-        f"-DINSTALL_DOCUMENTATION=OFF",
+        f"-DINSTALL_DOCUMENTATION=ON",
         f"-DCMAKE_CXX_FLAGS_RELWITHDEBINFO='-g -O3 -DNDEBUG'",
     ]
-
+    print("#### CMAKE FLAG ##########")
+    print(cmake_args)
     run_cmake_and_make(cmake_args, env)
 
 def compile_pal_msgs_project(project_name, cmake_flags, install_dir, src_dir, env = None):
@@ -73,7 +74,7 @@ def compile_pal_msgs_project(project_name, cmake_flags, install_dir, src_dir, en
     for package_name in package_order:
         subdir = project_path / package_name
         if subdir.is_dir() and (subdir / "CMakeLists.txt").is_file():
-            build_dir = subdir / "build"
+            build_dir = "build"
             build_dir.mkdir(exist_ok=True)
             os.chdir(build_dir)
             print("############## :{}".format(build_dir))

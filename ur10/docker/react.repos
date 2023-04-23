@@ -1,4 +1,20 @@
 repositories:
+  agimus/agimus:
+    type: git
+    url: https://github.com/agimus/agimus.git
+    version: devel
+  agimus/agimus-demos:
+    type: git
+    url: https://github.com/agimus/agimus-demos.git
+    version: master
+  agimus/rviz_camera_stream:
+    type: git
+    url: https://github.com/agimus/rviz_camera_stream.git
+    version: master
+  agimus/rviz_lighting:
+    type: git
+    url: https://github.com/agimus/rviz_lighting.git
+    version: master
   stack-of-tasks/dynamic-graph:
     type: git
     url: https://github.com/stack-of-tasks/dynamic-graph.git
@@ -42,7 +58,7 @@ repositories:
   stack-of-tasks/sot-universal-robot:
     type: git
     url: https://github.com/stack-of-tasks/sot-universal-robot.git
-    version: master     
+    version: devel     
   fmauch/universal_robot:
     type: git
     url: https://github.com/fmauch/universal_robot.git
@@ -67,6 +83,10 @@ repositories:
     type: git
     url: https://github.com/agimus/agimus_sot_msgs.git
     version: master
+  agimus/agimus-hpp:
+    type: git
+    url: https://github.com/agimus/agimus-hpp.git
+    version: devel
   humanoid-path-planner/hpp-manipulation-corba:
     type: git
     url: https://github.com/humanoid-path-planner/hpp-manipulation-corba
@@ -90,7 +110,7 @@ repositories:
   humanoid-path-planner/hpp-pinocchio:
     type: git
     url: https://github.com/humanoid-path-planner/hpp-pinocchio.git
-    version: 28baebf6c0a5cf42aeb36ffbd2343e682e054b0f
+    version: a839f4e638116867cbcd1072258dd1b2d4128677
   humanoid-path-planner/hpp-statistics:
     type: git
     url: https://github.com/humanoid-path-planner/hpp-statistics.git
@@ -102,6 +122,18 @@ repositories:
   humanoid-path-planner/hpp-util:
     type: git
     url: https://github.com/humanoid-path-planner/hpp-util.git
+    version: devel
+  humanoid-path-planner/hpp-gepetto-viewer:
+    type: git
+    url: https://github.com/humanoid-path-planner/hpp-gepetto-viewer.git
+    version: devel
+  humanoid-path-planner/hpp-corbaserver:
+    type: git
+    url: https://github.com/humanoid-path-planner/hpp-corbaserver.git
+    version: devel
+  humanoid-path-planner/hpp-template-corba:
+    type: git
+    url: https://github.com/humanoid-path-planner/hpp-template-corba.git
     version: devel
   florent-lamiraux/hpp-fcl:
     type: git
@@ -137,4 +169,20 @@ repositories:
   vision/visp:
     type: git
     url: https://github.com/lagadic/visp.git
+    version: master
+  gepetto/gerard-bauzil:
+    type: git
+    url: https://gitlab.laas.fr/gepetto/gerard-bauzil.git
+    version: master
+  gepetto/gepetto-viewer-corba:
+    type: git
+    url: https://github.com/Gepetto/gepetto-viewer-corba.git
+    version: devel
+  gepetto/gepetto-viewer:
+    type: git
+    url: https://github.com/Gepetto/gepetto-viewer.git
+    version: devel
+  UniversalRobots/Universal_Robots_ROS_Driver:
+    type: git
+    url: https://github.com/UniversalRobots/Universal_Robots_ROS_Driver.git
     version: master

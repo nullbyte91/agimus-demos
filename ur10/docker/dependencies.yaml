@@ -1,5 +1,5 @@
 - name: sot-universal-robot
-  sub: fmauch
+  sub: stack-of-tasks
   type: ROS
   language: C++
   cmake_flags:
@@ -130,7 +130,8 @@
   type: Non-ROS 
   language: C++
   cmake_flags:
-    - SUFFIX_SO_VERSION=OFF
+    - BUILD_PYTHON_INTERFACE=ON
+    - BUILD_UNIT_TESTS=OFF
     - BUILD_WITH_COLLISION_SUPPORT=ON
     - PYTHON_EXECUTABLE=${PYTHON_EXECUTABLE}
     - CMAKE_INSTALL_PREFIX=${INSTALL_DIR}
@@ -187,11 +188,126 @@
     - agimus_sot_msgs
     - hpp-manipulation-corba
 
+- name: agimus
+  sub: agimus
+  type: Non ROS
+  language: C++ and Python
+  cmake_flags:
+    - PYTHON_EXECUTABLE=${PYTHON_EXECUTABLE}
+    - CMAKE_INSTALL_PREFIX=${INSTALL_DIR}
+  build_options:
+    - BUILD_TYPE=Release
+    - BUILD_TESTING=ON  
+  dependencies:
+    - agimus-hpp
+    - agimus_sot_msgs
+
+- name: agimus-demos
+  sub: agimus
+  type: Non ROS
+  language: C++ and Python
+  cmake_flags:
+    - PYTHON_EXECUTABLE=${PYTHON_EXECUTABLE}
+    - CMAKE_INSTALL_PREFIX=${INSTALL_DIR}
+  build_options:
+    - BUILD_TYPE=Release
+    - BUILD_TESTING=ON  
+  dependencies:
+    - ~
+
+- name: rviz_camera_stream
+  sub: agimus
+  type: Non ROS
+  language: C++ and Python
+  cmake_flags:
+    - ~
+  build_options:
+    - ~
+  dependencies:
+    - ~
+
+- name: rviz_lighting
+  sub: agimus
+  type: Non ROS
+  language: C++ and Python
+  cmake_flags:
+    - ~
+  build_options:
+    - ~
+  dependencies:
+    - ~
+    
+
 - name: agimus_sot_msgs
   sub: agimus
   type: ROS
   language: .msg and .srv
   cmake_flags:
+    - CMAKE_INSTALL_PREFIX=${INSTALL_DIR}
+  dependencies:
+    - ~
+- name: agimus-hpp
+  sub: agimus
+  type: ROS
+  language: .msg and .srv
+  cmake_flags:
+    - BUILD_ROS_INTERFACE=ON
+    - CLIENT_TO_GEPETTO_VIEWER=ON
+    - PYTHON_EXECUTABLE=${PYTHON_EXECUTABLE}
+    - CMAKE_INSTALL_PREFIX=${INSTALL_DIR}
+  dependencies:
+    - dynamic_graph_bridge_msgs
+    - hpp-manipulation-corba
+    - agimus_sot_msgs
+    - hpp-gepetto-viewer
+- name: hpp-gepetto-viewer
+  sub: humanoid-path-planner
+  type: ROS
+  language: .msg and .srv
+  cmake_flags:
+    - PYTHON_EXECUTABLE=${PYTHON_EXECUTABLE}
+    - CMAKE_INSTALL_PREFIX=${INSTALL_DIR}
+  dependencies:
+    - gepetto-viewer-corba
+    - hpp-corbaserver
+- name: hpp-corbaserver
+  sub: humanoid-path-planner
+  type: ROS
+  language: .msg and .srv
+  cmake_flags:
+    - PYTHON_EXECUTABLE=${PYTHON_EXECUTABLE}
+    - CMAKE_INSTALL_PREFIX=${INSTALL_DIR}
+  dependencies:
+    - hpp-core
+    - hpp-template-corba
+    - hpp-constraints
+- name: hpp-template-corba
+  sub: humanoid-path-planner
+  type: ROS
+  language: .msg and .srv
+  cmake_flags:
+    - PYTHON_EXECUTABLE=${PYTHON_EXECUTABLE}
+    - CMAKE_INSTALL_PREFIX=${INSTALL_DIR}
+  dependencies:
+    - hpp-util
+
+- name: gepetto-viewer-corba
+  sub: gepetto
+  type: ROS
+  language: .msg and .srv
+  cmake_flags:
+    - PROJECT_USE_QT4=OFF
+    - PYTHON_EXECUTABLE=${PYTHON_EXECUTABLE}
+    - CMAKE_INSTALL_PREFIX=${INSTALL_DIR}
+  dependencies:
+    - gepetto-viewer
+- name: gepetto-viewer
+  sub: gepetto
+  type: ROS
+  language: .msg and .srv
+  cmake_flags:
+    - PROJECT_USE_QT4=OFF
+    - PYTHON_EXECUTABLE=${PYTHON_EXECUTABLE}
     - CMAKE_INSTALL_PREFIX=${INSTALL_DIR}
   dependencies:
     - ~
@@ -227,6 +343,7 @@
   type: Non ROS
   language: C++ and Python
   cmake_flags:
+    - PYTHON_EXECUTABLE=${PYTHON_EXECUTABLE}
     - CMAKE_INSTALL_PREFIX=${INSTALL_DIR}
   dependencies:
     - hpp-core
@@ -237,6 +354,8 @@
   type: Non ROS
   language: C++ and Python
   cmake_flags:
+    - BUILD_TESTING=OFF
+    - PYTHON_EXECUTABLE=${PYTHON_EXECUTABLE}
     - CMAKE_INSTALL_PREFIX=${INSTALL_DIR}
   dependencies:
     - example-robot-data
@@ -248,7 +367,9 @@
   type: Non ROS
   language: C++ and Python
   cmake_flags:
+    - PYTHON_EXECUTABLE=${PYTHON_EXECUTABLE}
     - CMAKE_INSTALL_PREFIX=${INSTALL_DIR}
+    - USE_QPOASES=OFF
   dependencies:
     - hpp-environments
     - hpp-pinocchio
@@ -259,6 +380,7 @@
   type: Non ROS
   language: C++ and Python
   cmake_flags:
+    - PYTHON_EXECUTABLE=${PYTHON_EXECUTABLE}
     - CMAKE_CXX_FLAGS="-I/home/nullbyte/Desktop/updated_react/react_ws/install/include"
     - CMAKE_INSTALL_PREFIX=${INSTALL_DIR}
   dependencies:
@@ -484,3 +606,31 @@
     - CMAKE_INSTALL_PREFIX=${INSTALL_DIR}
   dependencies:
     - visp_bridge
+
+- name: gerard-bauzil
+  sub: gepetto
+  cmake_flags:
+    - CMAKE_INSTALL_PREFIX=${INSTALL_DIR}
+  dependencies:
+    - ~
+
+- name: Universal_Robots_ROS_Driver
+  sub: UniversalRobots
+  cmake_flags:
+    - ~
+  dependencies:
+    - ur_calibration
+    - ur_dashboard_msgs
+    - ur_robot_driver
+
+- name: ur_calibration
+  sub: UniversalRobots
+  cmake_flags:
+    - ~
+  dependencies:
+    - ur_calibration
+    - ur_dashboard_msgs
+    - ur_robot_driver
+
+
+  
